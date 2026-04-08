@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GBSBFORYOU Publications — ज्ञान का संग्रहालय</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf7f2;--bg2:#f3ede1;--card:#ffffff;--gold:#b8821a;--gold2:#d4a135;--saffron:#c94f1a;--ink:#1a1208;--body:#3d3020;--muted:#7a6a50;--border:#e0d0b0;--border2:#c8b080;--hero:#1a1208}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--body);font-family:'Noto Serif Devanagari',serif;overflow-x:hidden}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;background:#fff;border-bottom:1.5px solid var(--border);padding:12px 36px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.nb .en{font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;display:block;font-family:'Crimson Pro',serif}
+.nb .hi{font-size:18px;font-weight:700;color:var(--ink)}
+.nl{display:flex;gap:22px;list-style:none;align-items:center}
+.nl a{font-family:'Crimson Pro',serif;font-size:16px;color:var(--muted);text-decoration:none;transition:color .2s}
+.nl a:hover{color:var(--gold)}
+.ncta{background:linear-gradient(135deg,var(--gold),var(--saffron));color:#fff!important;padding:7px 18px;border-radius:4px;font-weight:700!important;font-size:13px!important}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hbg span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px}
+.mmenu{display:none;position:fixed;inset:0;background:#fff;z-index:600;flex-direction:column;align-items:center;justify-content:center;gap:26px}
+.mmenu.open{display:flex}
+.mmenu a{font-size:22px;color:var(--ink);text-decoration:none;font-weight:700}
+.mmenu a:hover{color:var(--gold)}
+.mclose{position:absolute;top:16px;right:18px;background:none;border:none;font-size:28px;color:var(--muted);cursor:pointer}
+.mlogin{background:linear-gradient(135deg,var(--gold),var(--saffron));color:#fff!important;padding:12px 32px;border-radius:4px}
+/* HERO dark band */
+.hero{background:var(--hero);color:#faf7f2;text-align:center;padding:96px 20px 60px;position:relative}
+.hero-tag{font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:4px;color:var(--gold2);text-transform:uppercase;display:block;margin-bottom:18px}
+.hero h1{font-size:clamp(34px,7vw,72px);font-weight:700;line-height:1.1;margin-bottom:10px}
+.hero h1 span{color:var(--gold2)}
+.hero-sub{font-family:'Crimson Pro',serif;font-style:italic;font-size:clamp(13px,2vw,19px);color:rgba(250,247,242,.55);margin-bottom:24px}
+.hero-motto{display:inline-block;padding:11px 22px;border-left:3px solid var(--gold2);border-right:3px solid var(--gold2);font-style:italic;font-size:13px;color:rgba(250,247,242,.5);margin-bottom:32px;max-width:520px}
+.hero-stats{display:flex;gap:36px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+.sn{font-family:'Crimson Pro',serif;font-size:38px;font-weight:300;color:var(--gold2);line-height:1}
+.sl{font-size:11px;color:rgba(250,247,242,.45);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+/* BTNS */
+.btn{padding:11px 26px;border-radius:4px;font-family:'Noto Serif Devanagari',serif;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;text-decoration:none;display:inline-block}
+.btg{background:linear-gradient(135deg,var(--gold),var(--saffron));color:#fff}
+.btg:hover{box-shadow:0 6px 18px rgba(184,130,26,.35);transform:translateY(-1px)}
+.bto{background:transparent;border:2px solid var(--gold);color:var(--gold)}
+.bto:hover{background:var(--gold);color:#fff}
+/* SECTIONS */
+.sec{padding:64px 20px;max-width:1160px;margin:0 auto}
+.secf{padding:64px 20px;background:var(--bg2)}
+.secf .sec{padding:0;background:transparent}
+.stag{font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:8px;text-align:center}
+.stit{font-size:clamp(22px,3.5vw,38px);font-weight:700;color:var(--ink);text-align:center;line-height:1.25}
+.sline{width:48px;height:3px;background:linear-gradient(to right,var(--gold),var(--saffron));margin:14px auto 44px;border-radius:2px}
+/* FILTER */
+.frow{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-bottom:32px}
+.fb{padding:7px 16px;border:1.5px solid var(--border2);background:#fff;color:var(--muted);font-family:'Noto Serif Devanagari',serif;font-size:13px;cursor:pointer;border-radius:20px;transition:all .2s}
+.fb:hover,.fb.active{border-color:var(--gold);color:var(--gold);background:rgba(184,130,26,.08)}
+/* BOOKS */
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:20px}
+.bc{background:#fff;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.bc:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.09)}
+.bcov{height:180px;position:relative;display:flex;align-items:flex-end;padding:14px}
+.bcovbg{position:absolute;inset:0}
+.bcovov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.1) 55%,transparent 100%)}
+.bbadge{position:absolute;top:10px;right:10px;padding:3px 7px;font-size:9px;letter-spacing:1px;text-transform:uppercase;border-radius:3px;font-family:'Crimson Pro',serif;z-index:2}
+.bpub{background:rgba(30,80,30,.9);color:#a8e8a8}
+.bms{background:rgba(80,20,20,.9);color:#f0a0a0}
+.bct{position:relative;z-index:1;font-size:14px;font-weight:700;color:#fff;line-height:1.3}
+.bbd{padding:14px}
+.baut{font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:var(--gold);margin-bottom:5px}
+.bdesc{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:9px}
+.btags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.tg{padding:2px 7px;background:rgba(184,130,26,.1);border:1px solid rgba(184,130,26,.25);font-size:10px;color:var(--gold);border-radius:10px}
+.bbtns{display:flex;gap:5px}
+.bb{flex:1;padding:7px 4px;border-radius:4px;font-family:'Noto Serif Devanagari',serif;font-size:12px;cursor:pointer;transition:all .2s;text-align:center;border:1.5px solid var(--border2);background:#fff;color:var(--body)}
+.bb:hover{border-color:var(--gold);color:var(--gold)}
+.bbp{background:linear-gradient(135deg,var(--gold),var(--saffron));color:#fff;border:none}
+.bbp:hover{box-shadow:0 3px 10px rgba(184,130,26,.3)}
+/* AI */
+.aibox{margin-top:9px;padding:11px;background:#fff9f0;border:1.5px solid var(--border2);border-radius:6px;display:none}
+.aibox.open{display:block}
+.aih{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:5px;font-family:'Crimson Pro',serif;display:flex;align-items:center;gap:5px}
+.aidot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 1.5s infinite}
+.ait{font-family:'Crimson Pro',serif;font-size:14px;color:var(--body);line-height:1.7;font-style:italic}
+.ldots{display:flex;gap:4px}
+.ldots span{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:bounce .8s infinite}
+.ldots span:nth-child(2){animation-delay:.15s}
+.ldots span:nth-child(3){animation-delay:.3s}
+/* FEATURES */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.fc{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:22px;transition:border-color .2s,box-shadow .2s}
+.fc:hover{border-color:var(--gold);box-shadow:0 5px 16px rgba(184,130,26,.1)}
+.fi{font-size:26px;margin-bottom:10px;display:block}
+.ft{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.fd{font-family:'Crimson Pro',serif;font-size:14px;color:var(--muted);line-height:1.6}
+/* READER */
+.reader{background:#fff;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;max-width:780px;margin:0 auto}
+.rtop{background:var(--bg2);padding:11px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.rdots{display:flex;gap:5px}
+.rdots span{width:10px;height:10px;border-radius:50%}
+.dr{background:#ff5f57}.dy{background:#ffbd2e}.dg{background:#28ca41}
+.rbody{padding:32px 40px;position:relative}
+.rch{font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:block;font-family:'Crimson Pro',serif}
+.rh{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:20px;line-height:1.3}
+.rtxt{font-family:'Crimson Pro',serif;font-size:16px;line-height:1.85;color:var(--body);column-count:2;column-gap:28px}
+.rblur{position:absolute;bottom:0;left:0;right:0;height:130px;background:linear-gradient(to top,#fff,transparent);display:flex;align-items:flex-end;justify-content:center;padding-bottom:20px}
+.rlock{text-align:center}
+.rlock p{font-family:'Crimson Pro',serif;font-style:italic;color:var(--muted);margin-bottom:10px;font-size:14px}
+/* PLANS */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:920px;margin:0 auto}
+.plan{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:28px 22px;position:relative;transition:transform .3s,box-shadow .3s}
+.plan:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.07)}
+.planf{border-color:var(--gold);border-width:2px}
+.planf::before{content:'★ सर्वश्रेष्ठ';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--gold),var(--saffron));color:#fff;font-size:10px;padding:3px 14px;border-radius:20px;font-family:'Noto Serif Devanagari',serif;font-weight:700;white-space:nowrap}
+.pname{font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-family:'Crimson Pro',serif;margin-bottom:7px}
+.pprice{font-family:'Crimson Pro',serif;font-size:42px;font-weight:300;color:var(--ink);line-height:1}
+.pprice sup{font-size:17px;color:var(--gold);vertical-align:super}
+.pperiod{font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:6px}
+.psave{font-size:11px;color:#2a7a2a;margin-bottom:18px}
+.pdiv{height:1px;background:var(--border);margin-bottom:18px}
+.pfeats{list-style:none;margin-bottom:22px;display:flex;flex-direction:column;gap:8px}
+.pfeats li{font-size:13px;color:var(--body);padding-left:17px;position:relative;line-height:1.4}
+.pfeats li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:700}
+.pfeats li.no{color:var(--muted);text-decoration:line-through;opacity:.5}
+.pfeats li.no::before{content:'✗';color:var(--muted)}
+.pbtn{width:100%;padding:12px;border:2px solid var(--gold);background:transparent;color:var(--gold);font-family:'Noto Serif Devanagari',serif;font-size:13px;cursor:pointer;border-radius:4px;font-weight:700;transition:all .2s}
+.pbtn:hover,.planf .pbtn{background:linear-gradient(135deg,var(--gold),var(--saffron));color:#fff;border-color:transparent}
+/* ABOUT */
+.awrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.at h2{font-size:clamp(20px,3vw,34px);color:var(--ink);line-height:1.25;margin-bottom:14px}
+.at p{font-family:'Crimson Pro',serif;font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:11px}
+.aq{margin:20px 0;padding:14px 18px;border-left:3px solid var(--gold);background:#fff9f0}
+.aq p{font-style:italic;color:var(--gold);font-family:'Crimson Pro',serif;font-size:15px}
+.aq cite{display:block;font-size:11px;color:var(--muted);font-style:normal;margin-top:5px;letter-spacing:1px}
+.ecard{display:flex;gap:14px;align-items:flex-start;margin-top:20px;padding:18px;border:1.5px solid var(--border);border-radius:8px;background:#fff}
+.eav{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--saffron));display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;font-weight:700;flex-shrink:0;font-family:'Crimson Pro',serif}
+.en2{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.edesc{font-family:'Crimson Pro',serif;font-size:13px;color:var(--muted);line-height:1.5}
+.eroles{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+.rt{padding:2px 8px;background:rgba(184,130,26,.1);border:1px solid rgba(184,130,26,.25);font-size:10px;color:var(--gold);border-radius:10px}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:24px}
+.sc{padding:18px;background:#fff;border:1.5px solid var(--border);border-radius:8px;text-align:center;transition:border-color .2s}
+.sc:hover{border-color:var(--gold)}
+.sc .num{font-family:'Crimson Pro',serif;font-size:30px;font-weight:300;color:var(--gold);line-height:1}
+.sc .lbl{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
+.tline{padding-left:18px;border-left:2px solid var(--border2)}
+.tli{position:relative;margin-bottom:18px;padding-left:14px}
+.tli::before{content:'';position:absolute;left:-19px;top:5px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--gold)}
+.tly{font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;font-family:'Crimson Pro',serif}
+.tlt{font-family:'Crimson Pro',serif;font-size:13px;color:var(--muted);line-height:1.5}
+.tlt strong{color:var(--ink)}
+/* TESTI */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.tc{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:22px;transition:border-color .2s,box-shadow .2s}
+.tc:hover{border-color:var(--gold);box-shadow:0 5px 16px rgba(184,130,26,.08)}
+.tstars{color:var(--gold);font-size:12px;margin-bottom:9px;letter-spacing:2px}
+.ttxt{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--body);line-height:1.75;margin-bottom:16px}
+.tauth{display:flex;align-items:center;gap:9px;padding-top:14px;border-top:1px solid var(--border)}
+.tav{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--saffron));display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:700;flex-shrink:0;font-family:'Crimson Pro',serif}
+.tn{font-size:13px;font-weight:700;color:var(--ink)}
+.tr{font-size:11px;color:var(--muted)}
+.tb{display:inline-block;margin-top:3px;padding:2px 7px;background:rgba(184,130,26,.1);border:1px solid rgba(184,130,26,.2);font-size:10px;color:var(--gold);border-radius:3px;font-family:'Crimson Pro',serif;font-style:italic}
+/* CTA */
+.cta{background:var(--hero);color:#faf7f2;text-align:center;padding:64px 20px}
+.cta h2{font-size:clamp(22px,4vw,42px);margin-bottom:11px}
+.cta p{font-family:'Crimson Pro',serif;font-style:italic;font-size:16px;color:rgba(250,247,242,.5);margin-bottom:32px}
+/* FOOTER */
+footer{background:#fff;border-top:1.5px solid var(--border);padding:48px 36px 20px}
+.fgridf{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;max-width:1060px;margin:0 auto 32px}
+.fbn h3{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.fbn .ftag{font-size:10px;letter-spacing:3px;color:var(--gold);display:block;margin-bottom:9px;font-family:'Crimson Pro',serif}
+.fbn p{font-family:'Crimson Pro',serif;font-size:13px;color:var(--muted);line-height:1.6}
+.fcol h4{font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;font-family:'Crimson Pro',serif}
+.fcol ul{list-style:none}
+.fcol li{margin-bottom:7px}
+.fcol a{font-family:'Crimson Pro',serif;font-size:14px;color:var(--muted);text-decoration:none;transition:color .2s}
+.fcol a:hover{color:var(--gold)}
+.fbot{max-width:1060px;margin:0 auto;padding-top:18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:7px}
+.fbot p{font-family:'Crimson Pro',serif;font-size:12px;color:var(--muted)}
+.fmotto{font-style:italic;color:var(--gold)!important}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:700;display:none;align-items:center;justify-content:center;padding:18px}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:10px;width:100%;max-width:440px;overflow:hidden;box-shadow:0 20px 56px rgba(0,0,0,.14)}
+.mtop{height:4px;background:linear-gradient(to right,var(--gold),var(--saffron))}
+.mbody{padding:32px 28px}
+.mclose{float:right;background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer;margin-top:-4px}
+.mtabs{display:flex;border:1.5px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:22px}
+.mtab{flex:1;padding:10px;background:#fff;border:none;cursor:pointer;font-family:'Noto Serif Devanagari',serif;font-size:13px;color:var(--muted);transition:all .2s}
+.mtab.active{background:rgba(184,130,26,.12);color:var(--gold);font-weight:700}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;font-family:'Crimson Pro',serif}
+.fg input,.fg select{width:100%;padding:10px 13px;background:#faf7f2;border:1.5px solid var(--border);color:var(--ink);font-family:'Crimson Pro',serif;font-size:15px;border-radius:4px;outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus{border-color:var(--gold)}
+.pills{display:flex;gap:7px;flex-wrap:wrap}
+.pill{flex:1;min-width:100px;padding:9px 7px;border:1.5px solid var(--border);border-radius:4px;cursor:pointer;text-align:center;transition:all .2s;background:#fff}
+.pill:hover,.pill.sel{border-color:var(--gold);background:rgba(184,130,26,.08)}
+.pn{font-size:12px;color:var(--ink);font-weight:700}
+.pp{font-family:'Crimson Pro',serif;font-size:13px;color:var(--gold);margin-top:2px}
+.fsbmt{width:100%;padding:13px;margin-top:3px}
+.mfoot{text-align:center;margin-top:14px;font-family:'Crimson Pro',serif;font-size:13px;color:var(--muted)}
+.mfoot a{color:var(--gold);text-decoration:none}
+.sucbox{text-align:center;padding:14px 0;display:none}
+.sucbox.show{display:block}
+.sicon{font-size:44px;margin-bottom:10px}
+.sucbox h3{font-size:19px;color:var(--ink);margin-bottom:5px}
+.sucbox p{font-family:'Crimson Pro',serif;color:var(--muted);font-size:13px}
+.rzpnote{text-align:center;font-family:'Crimson Pro',serif;font-size:11px;color:var(--muted);margin-top:7px}
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:16px;background:linear-gradient(135deg,#1a4a1a,#2a5a2a);border:1px solid rgba(100,200,100,.3);border-radius:6px;padding:11px 16px;font-family:'Crimson Pro',serif;font-size:14px;color:#c0e8c0;z-index:800;transform:translateY(55px);opacity:0;transition:all .4s;max-width:280px}
+.toast.show{transform:translateY(0);opacity:1}
+/* REVEAL */
+.rev{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.rev.visible{opacity:1;transform:translateY(0)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+/* RESPONSIVE */
+@media(max-width:780px){
+  nav{padding:11px 14px}.nl{display:none}.hbg{display:flex}
+  .sec{padding:48px 14px}.secf{padding:48px 14px}
+  .awrap{grid-template-columns:1fr;gap:28px}
+  .pgrid{grid-template-columns:1fr}
+  .fgridf{grid-template-columns:1fr 1fr;gap:20px}
+  .rtxt{column-count:1}.rbody{padding:22px 14px}
+  .mbody{padding:22px 16px}
+  .tgrid{grid-template-columns:1fr}
+  .bgrid{grid-template-columns:1fr 1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .hero{padding:84px 14px 50px}
+  footer{padding:36px 14px 16px}
+}
+@media(max-width:460px){
+  .bgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr}
+  .sgrid{grid-template-columns:1fr 1fr}.hero-stats{gap:18px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nb"><span class="en">GBSBFORYOU Publications</span><span class="hi">प्रकाशन संग्रह</span></div>
+  <ul class="nl">
+    <li><a href="#books">पुस्तकें</a></li>
+    <li><a href="#features">सुविधाएँ</a></li>
+    <li><a href="#membership">सदस्यता</a></li>
+    <li><a href="#about">परिचय</a></li>
+    <li><a href="#testi">पाठक</a></li>
+    <li><a href="#" class="ncta" onclick="openModal('login');return false">प्रवेश करें</a></li>
+  </ul>
+  <button class="hbg" onclick="document.getElementById('mm').classList.toggle('open')"><span></span><span></span><span></span></button>
+</nav>
+<div class="mmenu" id="mm">
+  <button class="mclose" onclick="document.getElementById('mm').classList.remove('open')">✕</button>
+  <a href="#books" onclick="document.getElementById('mm').classList.remove('open')">📚 पुस्तकें</a>
+  <a href="#features" onclick="document.getElementById('mm').classList.remove('open')">✦ सुविधाएँ</a>
+  <a href="#membership" onclick="document.getElementById('mm').classList.remove('open')">🌟 सदस्यता</a>
+  <a href="#about" onclick="document.getElementById('mm').classList.remove('open')">🏛️ परिचय</a>
+  <a href="#testi" onclick="document.getElementById('mm').classList.remove('open')">💬 पाठक</a>
+  <a href="#" class="mlogin" onclick="openModal('login');document.getElementById('mm').classList.remove('open');return false">प्रवेश करें →</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-tag">GBSBFORYOU Publications — Bhopal, Madhya Pradesh</span>
+  <h1>ज्ञान का<br><span>संग्रहालय</span></h1>
+  <p class="hero-sub">Published & Manuscript Archive — प्रकाशित और अप्रकाशित पांडुलिपि संग्रह</p>
+  <div class="hero-motto">"राज मिले या नाराज़गी — हम केवल सत्य के पक्ष में रहेंगे।"</div>
+  <div class="hero-stats">
+    <div><div class="sn">18+</div><div class="sl">प्रकाशित</div></div>
+    <div><div class="sn">12+</div><div class="sl">पांडुलिपियाँ</div></div>
+    <div><div class="sn">5+</div><div class="sl">शोध श्रृंखलाएँ</div></div>
+    <div><div class="sn">3</div><div class="sl">भाषाएँ</div></div>
+  </div>
+  <button class="btn btg" onclick="openModal('signup')" style="font-size:15px;padding:13px 36px">प्रीमियम सदस्यता लें ✦</button>
+</div>
+
+<!-- BOOKS -->
+<div class="secf" id="books"><div class="sec">
+  <span class="stag">पुस्तक संग्रह</span>
+  <h2 class="stit">प्रकाशित और अप्रकाशित रचनाएँ</h2>
+  <div class="sline"></div>
+  <div class="frow">
+    <button class="fb active" onclick="filterBooks('all',this)">सभी</button>
+    <button class="fb" onclick="filterBooks('published',this)">प्रकाशित</button>
+    <button class="fb" onclick="filterBooks('unpublished',this)">पांडुलिपि</button>
+    <button class="fb" onclick="filterBooks('philosophy',this)">दर्शन</button>
+    <button class="fb" onclick="filterBooks('history',this)">इतिहास</button>
+    <button class="fb" onclick="filterBooks('social',this)">सामाजिक</button>
+    <button class="fb" onclick="filterBooks('fiction',this)">कथा</button>
+  </div>
+  <div class="bgrid" id="booksGrid"></div>
+</div></div>
+
+<!-- READER -->
+<div class="sec">
+  <span class="stag">पाठक अनुभव</span>
+  <h2 class="stit">प्रीमियम डिजिटल पाठन</h2>
+  <div class="sline"></div>
+  <div class="reader">
+    <div class="rtop">
+      <div class="rdots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div>
+      <span style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--muted);letter-spacing:2px">GBSBFORYOU READER ✦ PREMIUM</span>
+      <span style="font-size:12px;color:var(--muted);font-family:'Crimson Pro',serif">अध्याय ३/१७</span>
+    </div>
+    <div class="rbody">
+      <span class="rch">NST आयोग रिपोर्ट — अध्याय ३</span>
+      <h3 class="rh">घुमंतू सहकारी तंत्र: एक नई दृष्टि</h3>
+      <div class="rtxt">भारतीय स्वतंत्रता का सबसे कड़वा विरोधाभास यह है कि जो समुदाय सदियों से आज़ादी की साँस में जिए, वे ही 1947 के बाद अपराधी घोषित हुए। Criminal Tribes Act 1871 की छाया Habitual Offenders Act 1952 के रूप में जीवित है। NST इस अन्याय का समाधान है। टांडा आधारित सहकारी समिति, डिजिटल पहचान — ये स्तम्भ स्वायत्त भविष्य की नींव हैं। नीयत नहीं, प्रक्रिया तौली जाती है।</div>
+      <div class="rblur"><div class="rlock"><p>🔒 प्रीमियम सदस्यों के लिए उपलब्ध</p><button class="btn btg" onclick="openModal('signup')">सदस्यता लेकर पढ़ें →</button></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="secf" id="features"><div class="sec">
+  <span class="stag">प्रीमियम सुविधाएँ</span>
+  <h2 class="stit">सदस्यों को क्या मिलता है?</h2>
+  <div class="sline"></div>
+  <div class="fgrid">
+    <div class="fc rev"><span class="fi">📖</span><h3 class="ft">पूर्ण पुस्तक पाठन</h3><p class="fd">सभी प्रकाशित और अप्रकाशित पांडुलिपियाँ ऑनलाइन पढ़ें।</p></div>
+    <div class="fc rev"><span class="fi">🤖</span><h3 class="ft">AI पुस्तक सारांश</h3><p class="fd">Claude AI द्वारा तत्काल हिंदी सारांश और विषय विश्लेषण।</p></div>
+    <div class="fc rev"><span class="fi">⬇️</span><h3 class="ft">PDF डाउनलोड</h3><p class="fd">पुस्तक का PDF डाउनलोड करें, ऑफलाइन पढ़ें।</p></div>
+    <div class="fc rev"><span class="fi">🎙️</span><h3 class="ft">ऑडियो पुस्तकें</h3><p class="fd">चयनित पुस्तकों के AI ऑडियो संस्करण सुनें।</p></div>
+    <div class="fc rev"><span class="fi">📝</span><h3 class="ft">शोध सामग्री</h3><p class="fd">DNT/बंजारा शोध, NST नीति दस्तावेज़ — केवल सदस्यों के लिए।</p></div>
+    <div class="fc rev"><span class="fi">💬</span><h3 class="ft">लेखक से संवाद</h3><p class="fd">मासिक ऑनलाइन चर्चा सत्र में सीधे प्रश्न पूछें।</p></div>
+    <div class="fc rev"><span class="fi">🔔</span><h3 class="ft">पूर्व प्रकाशन पहुँच</h3><p class="fd">नई पुस्तकें प्रकाशन से पहले पढ़ें।</p></div>
+    <div class="fc rev"><span class="fi">🏛️</span><h3 class="ft">डिजिटल अभिलेखागार</h3><p class="fd">सभ्यता शोध, वैदिक दर्शन, भारतीय न्याय परम्पराएँ।</p></div>
+  </div>
+</div></div>
+
+<!-- MEMBERSHIP -->
+<div class="sec" id="membership">
+  <span class="stag">सदस्यता योजनाएँ</span>
+  <h2 class="stit">अपनी यात्रा चुनें</h2>
+  <div class="sline"></div>
+  <div class="pgrid rev">
+    <div class="plan">
+      <div class="pname">पाठक</div><div class="pprice"><sup>₹</sup>0</div>
+      <div class="pperiod">निःशुल्क हमेशा के लिए</div><div class="pdiv"></div>
+      <ul class="pfeats"><li>5 पुस्तकों का आंशिक पाठन</li><li>AI सारांश — 3/माह</li><li>मासिक समाचार पत्र</li><li class="no">पूर्ण पाठन</li><li class="no">PDF डाउनलोड</li><li class="no">पांडुलिपियाँ</li></ul>
+      <button class="pbtn" onclick="openModal('signup')">निःशुल्क शुरू करें</button>
+    </div>
+    <div class="plan planf">
+      <div class="pname">प्रीमियम</div><div class="pprice"><sup>₹</sup>199</div>
+      <div class="pperiod">प्रति माह</div><div class="psave">✓ वार्षिक पर 40% बचत</div><div class="pdiv"></div>
+      <ul class="pfeats"><li>सभी पुस्तकें असीमित</li><li>AI सारांश असीमित</li><li>5 पांडुलिपियाँ/माह</li><li>PDF (10/माह)</li><li>ऑडियो पुस्तकें</li><li>मासिक लेखक संवाद</li></ul>
+      <button class="pbtn" onclick="openModal('signup','premium')">अभी सदस्य बनें</button>
+    </div>
+    <div class="plan">
+      <div class="pname">संरक्षक</div><div class="pprice"><sup>₹</sup>499</div>
+      <div class="pperiod">प्रति माह — सीमित स्थान</div><div class="pdiv"></div>
+      <ul class="pfeats"><li>सम्पूर्ण संग्रह असीमित</li><li>सभी पांडुलिपियाँ</li><li>असीमित PDF + KDP छूट</li><li>पूर्ण शोध अभिलेखागार</li><li>सीधे लेखक से संपर्क</li><li>पूर्व प्रकाशन पहुँच</li></ul>
+      <button class="pbtn" onclick="openModal('signup','patron')">संरक्षक बनें</button>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="secf" id="about"><div class="sec">
+  <span class="stag">संस्था परिचय</span>
+  <h2 class="stit">GBSBFORYOU Publications के बारे में</h2>
+  <div class="sline"></div>
+  <div class="awrap">
+    <div class="rev">
+      <div class="at">
+        <h2>सत्य का स्वतंत्र स्वर —<br>भोपाल से विश्व तक</h2>
+        <p>GBSBFORYOU Publications भोपाल, मध्य प्रदेश से संचालित स्वतंत्र प्रकाशन संस्था है। हिंदी साहित्य, सभ्यता शोध, अद्वैत वेदांत, DNT/बंजारा समुदायों के अधिकार — सभी धाराएँ एक ही प्रवाह में मिलती हैं।</p>
+        <p>Amazon KDP के माध्यम से वैश्विक वितरण, AI-संचालित प्लेटफॉर्म और GlobalizeAI Agency — यह संस्था का बहुआयामी स्वरूप है।</p>
+        <div class="aq"><p>"नीयत नहीं, प्रक्रिया तौली जाती है।"</p><cite>— GBSBFORYOU संपादकीय सिद्धांत</cite></div>
+        <div class="ecard">
+          <div class="eav">अ</div>
+          <div><div class="en2">अजय सिंह चौहान</div><div class="edesc">संस्थापक और मुख्य संपादक। लेखक, शोधकर्ता, DNT अधिवक्ता और AI उद्यमी।</div><div class="eroles"><span class="rt">लेखक</span><span class="rt">शोधकर्ता</span><span class="rt">DNT अधिवक्ता</span><span class="rt">AI उद्यमी</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="rev">
+      <div class="sgrid">
+        <div class="sc"><div class="num">18+</div><div class="lbl">प्रकाशित</div></div>
+        <div class="sc"><div class="num">12+</div><div class="lbl">पांडुलिपियाँ</div></div>
+        <div class="sc"><div class="num">2019</div><div class="lbl">स्थापना</div></div>
+        <div class="sc"><div class="num">KDP</div><div class="lbl">वैश्विक वितरण</div></div>
+      </div>
+      <div class="tline">
+        <div class="tli"><div class="tly">2019–20</div><div class="tlt"><strong>आज़ादी की रात</strong> — Criminal Tribes Act 1871 पर हिंदी उपन्यास।</div></div>
+        <div class="tli"><div class="tly">2021</div><div class="tlt"><strong>श्री अरूपोपनिषद्</strong> — अद्वैत वेदांत दार्शनिक ग्रंथ।</div></div>
+        <div class="tli"><div class="tly">2022</div><div class="tlt"><strong>Sikhi: Intertraditional Sanatan</strong> — सनातन और सिख दर्शन।</div></div>
+        <div class="tli"><div class="tly">2023</div><div class="tlt"><strong>NST आयोग रिपोर्ट</strong> — 17 अध्याय, DNT/बंजारा नीति।</div></div>
+        <div class="tli"><div class="tly">2024</div><div class="tlt"><strong>न्याय की जड़ें</strong> — सभ्यताओं में न्याय परम्परा।</div></div>
+        <div class="tli"><div class="tly">2025</div><div class="tlt"><strong>Operation Sindoor: दर्शन</strong> — नई पांडुलिपि।</div></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- TESTIMONIALS -->
+<div class="sec" id="testi">
+  <span class="stag">पाठक प्रतिक्रिया</span>
+  <h2 class="stit">हमारे सदस्य कहते हैं</h2>
+  <div class="sline"></div>
+  <div class="tgrid">
+    <div class="tc rev"><div class="tstars">★★★★★</div><p class="ttxt">NST आयोग रिपोर्ट पढ़कर पहली बार लगा कि बंजारा समुदाय के लिए ठोस नीतिगत दृष्टि है। यह केवल किताब नहीं, एक आंदोलन की नींव है।</p><div class="tauth"><div class="tav">र</div><div><div class="tn">रमेश बंजारा</div><div class="tr">सामाजिक कार्यकर्ता, नागपुर</div><span class="tb">NST आयोग रिपोर्ट</span></div></div></div>
+    <div class="tc rev"><div class="tstars">★★★★★</div><p class="ttxt">श्री अरूपोपनिषद् — आधुनिक भाषा में अद्वैत वेदांत की इतनी गहरी व्याख्या दुर्लभ है। AI सारांश ने अध्ययन और सुगम किया।</p><div class="tauth"><div class="tav">प</div><div><div class="tn">प्रो. प्रियंका शर्मा</div><div class="tr">दर्शनशास्त्र, दिल्ली विश्वविद्यालय</div><span class="tb">श्री अरूपोपनिषद्</span></div></div></div>
+    <div class="tc rev"><div class="tstars">★★★★★</div><p class="ttxt">आज़ादी की रात — 1947 का वह विरोधाभास जो इतिहास की किताबें नहीं पूछतीं। यह उपन्यास वो सवाल उठाता है जो ज़रूरी हैं।</p><div class="tauth"><div class="tav">स</div><div><div class="tn">सुनील वर्मा</div><div class="tr">लेखक, भोपाल</div><span class="tb">आज़ादी की रात</span></div></div></div>
+    <div class="tc rev"><div class="tstars">★★★★★</div><p class="ttxt">न्याय की जड़ें — Vedic और Islamic परम्पराओं को एक साथ रखना साहस है। GBSBFORYOU का यही निडर स्वर इसे अलग बनाता है।</p><div class="tauth"><div class="tav">म</div><div><div class="tn">मो. इरफान क़ाज़ी</div><div class="tr">कानूनी शोधकर्ता, हैदराबाद</div><span class="tb">न्याय की जड़ें</span></div></div></div>
+    <div class="tc rev"><div class="tstars">★★★★★</div><p class="ttxt">ICSE Mathematics Guide ने मेरे बेटे की तैयारी बदल दी। "Pattern से समझ, समझ से समाधान" — यह फ्रेमवर्क वाकई काम करता है।</p><div class="tauth"><div class="tav">अ</div><div><div class="tn">अनीता गुप्ता</div><div class="tr">अभिभावक, इंदौर</div><span class="tb">ICSE Maths Guide</span></div></div></div>
+    <div class="tc rev"><div class="tstars">★★★★★</div><p class="ttxt">संसद का दर्पण पढ़कर लोकतंत्र की जटिलता समझी। "राज मिले या नाराज़गी" — यही GBSBFORYOU की असली पहचान है।</p><div class="tauth"><div class="tav">क</div><div><div class="tn">कविता राठौर</div><div class="tr">पत्रकार, जबलपुर</div><span class="tb">संसद का दर्पण</span></div></div></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>आज ही प्रीमियम यात्रा शुरू करें</h2>
+  <p>ज्ञान का यह संग्रहालय आपकी प्रतीक्षा कर रहा है।</p>
+  <div style="display:flex;gap:11px;justify-content:center;flex-wrap:wrap">
+    <button class="btn btg" onclick="openModal('signup','premium')" style="font-size:15px;padding:13px 32px">सदस्यता लें — ₹199/माह ✦</button>
+    <a href="https://www.amazon.in/s?k=gbsbforyou" target="_blank" class="btn bto" style="font-size:14px;padding:12px 24px">Amazon KDP ↗</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fgridf">
+    <div class="fbn"><h3>GBSBFORYOU Publications</h3><span class="ftag">GBSB4U — Bhopal, Madhya Pradesh</span><p>ज्ञान, सत्य और सभ्यता की खोज में — प्रकाशन का एक स्वतंत्र स्वर।</p></div>
+    <div class="fcol"><h4>पुस्तक संग्रह</h4><ul><li><a href="#">आज़ादी की रात</a></li><li><a href="#">श्री अरूपोपनिषद्</a></li><li><a href="#">संसद का दर्पण</a></li><li><a href="#">न्याय की जड़ें</a></li><li><a href="#">NST आयोग रिपोर्ट</a></li></ul></div>
+    <div class="fcol"><h4>सदस्यता</h4><ul><li><a href="#membership">निःशुल्क पाठक</a></li><li><a href="#membership">प्रीमियम ₹199</a></li><li><a href="#membership">संरक्षक ₹499</a></li><li><a href="https://www.amazon.in/s?k=gbsbforyou" target="_blank">Amazon KDP ↗</a></li></ul></div>
+    <div class="fcol"><h4>संपर्क</h4><ul><li><a href="mailto:gbsbforyou@gmail.com">gbsbforyou@gmail.com</a></li><li><a href="#">भोपाल, मध्य प्रदेश</a></li><li><a href="#">GlobalizeAI Agency</a></li></ul></div>
+  </div>
+  <div class="fbot"><p>© 2025 GBSBFORYOU Publications. Chief Editor: Ajay Singh Chauhan</p><p class="fmotto">"राज मिले या नाराज़गी — हम केवल सत्य के पक्ष में रहेंगे।"</p></div>
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="mtop"></div>
+    <div class="mbody">
+      <button class="mclose" onclick="closeModal()">✕</button>
+      <div class="sucbox" id="sucbox"><div class="sicon" id="sicon">✦</div><h3 id="stitle">स्वागत!</h3><p id="smsg"></p></div>
+      <div id="mcontent">
+        <div class="mtabs"><button class="mtab active" id="tl" onclick="switchTab('login')">प्रवेश करें</button><button class="mtab" id="ts" onclick="switchTab('signup')">नया खाता</button></div>
+        <div id="lform">
+          <div class="fg"><label>ईमेल</label><input type="email" id="le" placeholder="aapka@email.com"></div>
+          <div class="fg"><label>पासवर्ड</label><input type="password" id="lp" placeholder="••••••••"></div>
+          <button class="btn btg fsbmt" onclick="handleLogin()">प्रवेश करें →</button>
+          <p class="mfoot">नए हैं? <a href="#" onclick="switchTab('signup');return false">खाता बनाएँ →</a></p>
+        </div>
+        <div id="sform" style="display:none">
+          <div class="fg"><label>पूरा नाम</label><input type="text" id="sn" placeholder="आपका नाम"></div>
+          <div class="fg"><label>ईमेल</label><input type="email" id="se" placeholder="aapka@email.com"></div>
+          <div class="fg"><label>सदस्यता योजना</label>
+            <div class="pills">
+              <div class="pill" onclick="selP(this,'free')"><div class="pn">पाठक</div><div class="pp">निःशुल्क</div></div>
+              <div class="pill sel" onclick="selP(this,'premium')"><div class="pn">प्रीमियम</div><div class="pp">₹199/माह</div></div>
+              <div class="pill" onclick="selP(this,'patron')"><div class="pn">संरक्षक</div><div class="pp">₹499/माह</div></div>
+            </div>
+          </div>
+          <div class="fg"><label>पासवर्ड</label><input type="password" id="sp" placeholder="कम से कम 8 अक्षर"></div>
+          <div id="fbtn" style="display:none"><button class="btn btg fsbmt" onclick="handleFree()">निःशुल्क खाता बनाएँ →</button></div>
+          <div id="pbtn"><button class="btn btg fsbmt" id="paybtn" onclick="initPay()">भुगतान करें और सदस्य बनें →</button><p class="rzpnote">🔒 Razorpay — UPI · Card · Net Banking</p></div>
+          <p class="mfoot">खाता है? <a href="#" onclick="switchTab('login');return false">प्रवेश करें →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const BK=[
+  {id:'azadi',title:"आज़ादी की रात",auth:"अजय सिंह चौहान",desc:"1947 के Criminal Tribes Act के विरोधाभास पर केंद्रित हिंदी उपन्यास।",tags:["fiction","history"],lbl:["कथा","इतिहास"],st:"published",ac:"premium",col:"linear-gradient(135deg,#2d1505,#6b2a08)",kdp:"https://www.amazon.in/s?k=azadi+ki+raat"},
+  {id:'arupo',title:"श्री अरूपोपनिषद्",auth:"अजय सिंह चौहान",desc:"अद्वैत वेदांत पर दार्शनिक ग्रंथ — वसुधैव कुटुम्बकम् की व्याख्या।",tags:["philosophy"],lbl:["दर्शन","आध्यात्म"],st:"published",ac:"premium",col:"linear-gradient(135deg,#051a1a,#0a3d3d)",kdp:"https://www.amazon.in/s?k=arupopanishad"},
+  {id:'nst',title:"NST आयोग रिपोर्ट",auth:"GBSBFORYOU Research",desc:"घुमंतू जनजातियों पर 17-अध्यायीय नीति दस्तावेज़।",tags:["social","history"],lbl:["नीति","DNT"],st:"unpublished",ac:"premium",col:"linear-gradient(135deg,#051a05,#0a3a0a)",kdp:null},
+  {id:'sansad',title:"संसद का दर्पण",auth:"अजय सिंह चौहान",desc:"भारतीय संसदीय आचरण और लोकतंत्र पर खुला संवाद।",tags:["history","social"],lbl:["राजनीति","संसद"],st:"published",ac:"free",col:"linear-gradient(135deg,#05051a,#10103a)",kdp:"https://www.amazon.in/s?k=sansad+ka+darpan"},
+  {id:'nyay',title:"न्याय की जड़ें",auth:"अजय सिंह चौहान",desc:"सभ्यताओं में न्याय परम्पराओं की तुलनात्मक समीक्षा।",tags:["history","philosophy"],lbl:["इतिहास","दर्शन"],st:"unpublished",ac:"premium",col:"linear-gradient(135deg,#1a1005,#3a2808)",kdp:null},
+  {id:'uma',title:"उमा भारती: राजनीतिक जीवनी",auth:"अजय सिंह चौहान",desc:"उमा भारती की राजनीतिक यात्रा और विचारधारा।",tags:["history","social"],lbl:["जीवनी","राजनीति"],st:"published",ac:"premium",col:"linear-gradient(135deg,#1a050a,#3a0a14)",kdp:"https://www.amazon.in/s?k=uma+bharti"},
+  {id:'sindoor',title:"Operation Sindoor: दर्शन",auth:"GBSBFORYOU Research",desc:"वसुधैव कुटुम्बकम् और कौटिल्य के युद्ध-दर्शन से विश्लेषण।",tags:["history","philosophy"],lbl:["रणनीति","दर्शन"],st:"unpublished",ac:"premium",col:"linear-gradient(135deg,#1a0a0a,#3a1414)",kdp:null},
+  {id:'icse',title:"ICSE गणित — Class 10",auth:"GBSBFORYOU Education",desc:"Pattern से समझ, समझ से समाधान — ICSE Class 10 गणित।",tags:["social"],lbl:["शिक्षा","गणित"],st:"published",ac:"free",col:"linear-gradient(135deg,#05100a,#0a3514)",kdp:"https://www.amazon.in/s?k=icse+maths+10"},
+];
+let planV='premium',aiC={},logdIn=false;
+function renderBooks(f){
+  const g=document.getElementById('booksGrid');
+  const list=f==='all'?BK:BK.filter(b=>b.tags.includes(f)||b.st===f);
+  g.innerHTML=list.map(b=>`<div class="bc">
+    <div class="bcov"><div class="bcovbg" style="background:${b.col}"></div><div class="bcovov"></div>
+    <span class="bbadge ${b.st==='published'?'bpub':'bms'}">${b.st==='published'?'✓ प्रकाशित':'◎ पांडुलिपि'}</span>
+    <div class="bct">${b.title}</div></div>
+    <div class="bbd"><div class="baut">${b.auth}</div><p class="bdesc">${b.desc}</p>
+    <div class="btags">${b.lbl.map(l=>`<span class="tg">${l}</span>`).join('')}</div>
+    <div class="bbtns">
+      <button class="bb bbp" onclick="${b.ac==='free'||logdIn?'showToast(\'पढ़ना शुरू करें!\')':'openModal(\'signup\')'}">${b.ac==='free'||logdIn?'पढ़ें →':'🔒 पढ़ें'}</button>
+      ${b.kdp?`<a href="${b.kdp}" target="_blank" class="bb" style="display:flex;align-items:center;justify-content:center;text-decoration:none">KDP↗</a>`:''}
+      <button class="bb" onclick="toggleAI('${b.id}','${encodeURIComponent(b.title)}','${encodeURIComponent(b.desc)}')">AI</button>
+    </div>
+    <div class="aibox" id="ai-${b.id}"><div class="aih"><div class="aidot"></div><span>AI सारांश</span></div>
+    <div class="ait" id="ait-${b.id}"><div class="ldots"><span></span><span></span><span></span></div></div></div>
+    </div></div>`).join('');
+}
+function filterBooks(f,btn){document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderBooks(f);}
+async function toggleAI(id,te,de){
+  const box=document.getElementById('ai-'+id);
+  if(box.classList.contains('open')){box.classList.remove('open');return;}
+  document.querySelectorAll('.aibox.open').forEach(b=>b.classList.remove('open'));
+  box.classList.add('open');
+  if(aiC[id]){document.getElementById('ait-'+id).innerHTML=aiC[id];return;}
+  document.getElementById('ait-'+id).innerHTML='<div class="ldots"><span></span><span></span><span></span></div>';
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:250,system:"GBSBFORYOU Publications के लिए हिंदी में 3-4 वाक्यों में पुस्तक सारांश लिखें।",messages:[{role:"user",content:`शीर्षक: ${decodeURIComponent(te)}\nविवरण: ${decodeURIComponent(de)}`}]})});
+    const d=await r.json();
+    const t=d.content?.[0]?.text||"सारांश उपलब्ध नहीं।";
+    aiC[id]=t;document.getElementById('ait-'+id).innerHTML=t;
+  }catch(e){document.getElementById('ait-'+id).innerHTML="⚠️ पुनः प्रयास करें।";}
+}
+function openModal(type,plan){
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('sucbox').style.display='none';
+  document.getElementById('mcontent').style.display='';
+  if(plan)selP(null,plan);
+  switchTab(type==='signup'?'signup':'login');
+}
+function closeModal(){document.getElementById('overlay').classList.remove('open');}
+function switchTab(t){
+  const il=t==='login';
+  document.getElementById('lform').style.display=il?'':'none';
+  document.getElementById('sform').style.display=il?'none':'';
+  document.getElementById('tl').classList.toggle('active',il);
+  document.getElementById('ts').classList.toggle('active',!il);
+}
+function selP(el,plan){
+  planV=plan;
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+  if(el)el.classList.add('sel');
+  else{const map={free:'निःशुल्क',premium:'₹199',patron:'₹499'};document.querySelectorAll('.pill').forEach(p=>{if(p.querySelector('.pp').textContent.includes(map[plan]))p.classList.add('sel');});}
+  document.getElementById('fbtn').style.display=plan==='free'?'':'none';
+  document.getElementById('pbtn').style.display=plan==='free'?'none':'';
+  if(plan!=='free')document.getElementById('paybtn').textContent=`भुगतान करें ${plan==='premium'?'₹199':'₹499'} → सदस्य बनें`;
+}
+function handleLogin(){
+  const e=document.getElementById('le').value.trim(),p=document.getElementById('lp').value;
+  if(!e||!p){showToast('⚠️ ईमेल और पासवर्ड भरें');return;}
+  showSuc('✦','आपका स्वागत है!','लॉगिन सफल रहा।');logdIn=true;renderBooks('all');setTimeout(closeModal,1800);
+}
+function handleFree(){
+  const n=document.getElementById('sn').value.trim(),e=document.getElementById('se').value.trim();
+  if(!n||!e){showToast('⚠️ नाम और ईमेल भरें');return;}
+  showSuc('📖','खाता बन गया!','निःशुल्क पाठक खाता सक्रिय।');logdIn=true;renderBooks('all');setTimeout(closeModal,1800);
+}
+function initPay(){
+  const n=document.getElementById('sn').value.trim(),e=document.getElementById('se').value.trim();
+  if(!n||!e){showToast('⚠️ नाम और ईमेल भरें');return;}
+  if(!window.Razorpay){const s=document.createElement('script');s.src='https://checkout.razorpay.com/v1/checkout.js';s.onload=()=>openRZP(n,e);s.onerror=()=>demoOk();document.head.appendChild(s);}
+  else openRZP(n,e);
+}
+function openRZP(n,e){
+  if(!window.Razorpay){demoOk();return;}
+  new window.Razorpay({key:"rzp_test_REPLACE_WITH_YOUR_KEY",amount:planV==='premium'?19900:49900,currency:"INR",name:"GBSBFORYOU Publications",description:planV==='premium'?'Premium ₹199/माह':'Patron ₹499/माह',prefill:{name:n,email:e},theme:{color:"#b8821a"},handler:(r)=>{showSuc('🌟','सदस्यता सक्रिय!','भुगतान सफल। धन्यवाद!');logdIn=true;renderBooks('all');setTimeout(closeModal,2000);},modal:{ondismiss:()=>showToast('भुगतान रद्द।')}}).open();
+}
+function demoOk(){showSuc('🌟','Demo Mode','Razorpay key जोड़ने पर live होगा।');logdIn=true;renderBooks('all');setTimeout(closeModal,2200);}
+function showSuc(ic,ti,ms){
+  document.getElementById('mcontent').style.display='none';
+  const b=document.getElementById('sucbox');b.style.display='block';
+  document.getElementById('sicon').textContent=ic;
+  document.getElementById('stitle').textContent=ti;
+  document.getElementById('smsg').textContent=ms;
+}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+const obs=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');en.target.querySelectorAll('.fc,.tc,.sc,.tli').forEach((c,i)=>{c.style.transitionDelay=i*.06+'s';c.classList.add('visible');});}}),{threshold:.06});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+renderBooks('all');selP(null,'premium');
+</script>
+</body>
+</html>
