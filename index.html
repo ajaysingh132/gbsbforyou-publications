@@ -3,51 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>जगन्नाथ प्रकाशन Publisher</title>
+<title>जगन्नाथ प्रकाशन</title>
 
 <style>
-body {
-  font-family: sans-serif;
-  margin: 0;
-  background: #fff7e6;
-}
-
-header {
-  background: #ff8c00;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  font-size: 20px;
-}
-
-.container {
-  padding: 10px;
-}
-
-.card {
-  background: white;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-}
-
-button {
-  padding: 10px;
-  margin: 5px 0;
-  width: 100%;
-  border: none;
-  border-radius: 8px;
-  background: #ff8c00;
-  color: white;
-  font-size: 16px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0;
-}
-
+body { font-family: sans-serif; margin:0; background:#fff7e6;}
+header { background:#ff8c00; color:#fff; padding:15px; text-align:center;}
+.container { padding:10px;}
+.card { background:#fff; padding:10px; margin-bottom:10px; border-radius:10px;}
+button { width:100%; padding:10px; margin:5px 0; border:none; border-radius:8px; background:#ff8c00; color:#fff;}
+input, textarea, select { width:100%; padding:8px; margin:5px 0;}
+table { width:100%; border-collapse: collapse;}
+th, td { border:1px solid #ccc; padding:6px; text-align:center;}
 </style>
 </head>
 
@@ -57,122 +23,106 @@ input, textarea {
 
 <div class="container">
 
-<!-- Excel Import -->
+<!-- Book Form -->
 <div class="card">
-<h3>📂 Excel (CSV) Import</h3>
-<input type="file" id="fileInput" accept=".csv">
-</div>
+<h3>📘 Book Form</h3>
 
-<!-- Form -->
-<div class="card">
-<h3>📝 Book Form</h3>
+<input id="jp" placeholder="JP Number">
 <input id="title" placeholder="Title">
 <input id="author" placeholder="Author">
+
+<select id="status">
+<option>Draft</option>
+<option>Ready</option>
+<option>Published</option>
+</select>
+
 <textarea id="description" placeholder="Description"></textarea>
 <input id="keywords" placeholder="Keywords">
 </div>
 
 <!-- Editor -->
 <div class="card">
-<h3>🧠 Editor / Notepad</h3>
-<textarea id="editor" rows="6"></textarea>
+<h3>🧠 पांडुलिपि Editor</h3>
+<textarea id="editor" rows="8" placeholder="यहाँ टेक्स्ट paste करें"></textarea>
 </div>
 
-<!-- Formatter -->
+<!-- Actions -->
 <div class="card">
-<h3>⚙️ Formatter</h3>
+<h3>⚙️ Actions</h3>
+
 <button onclick="formatText()">Auto Format</button>
+<button onclick="runAI()">🤖 AI Generate</button>
+<button onclick="copyAll()">📋 Copy All</button>
+
 </div>
 
-<!-- Copy Panel -->
+<!-- Dashboard -->
 <div class="card">
-<h3>📋 Copy Panel</h3>
-<button onclick="copyText(title.value)">Copy Title</button>
-<button onclick="copyText(description.value)">Copy Description</button>
-<button onclick="copyText(keywords.value)">Copy Keywords</button>
-<button onclick="copyAll()">Copy All</button>
-</div>
+<h3>📚 Book Dashboard</h3>
 
-<!-- Links -->
-<div class="card">
-<h3>🌐 Tools</h3>
-<button onclick="openLink('https://kdp.amazon.com')">Open KDP</button>
-<button onclick="openLink('https://docs.google.com')">Google Docs</button>
-<button onclick="openLink('https://drive.google.com')">Google Drive</button>
+<table>
+<thead>
+<tr>
+<th>JP</th>
+<th>Title</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="bookTable"></tbody>
+</table>
+
+<button onclick="saveBook()">➕ Add / Save Book</button>
+
 </div>
 
 </div>
 
 <script>
 
-// CSV Import
-document.getElementById("fileInput").addEventListener("change", function(e){
-  const file = e.target.files[0];
-  const reader = new FileReader();
+// DATA
+let books = JSON.parse(localStorage.getItem("books")) || [];
 
-  reader.onload = function(event){
-    const lines = event.target.result.split("\n");
-    const data = lines[1].split(",");
-
-    document.getElementById("title").value = data[0] || "";
-    document.getElementById("author").value = data[1] || "";
-    document.getElementById("description").value = data[2] || "";
-    document.getElementById("keywords").value = data[3] || "";
+// SAVE
+function saveBook() {
+  const book = {
+    jp: jp.value,
+    title: title.value,
+    author: author.value,
+    status: status.value,
+    description: description.value,
+    keywords: keywords.value,
+    content: editor.value
   };
 
-  reader.readAsText(file);
-});
-
-// Formatter
-function formatText() {
-  let text = document.getElementById("description").value;
-  text = "📖 " + text + "\n\n👉 यह पुस्तक आपके लिए उपयोगी है।";
-  document.getElementById("description").value = text;
-  alert("Formatted!");
+  books.push(book);
+  localStorage.setItem("books", JSON.stringify(books));
+  renderTable();
 }
 
-// Copy
-async function copyText(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    alert("Copied!");
-  } catch {
-    alert("Permission denied!");
-  }
+// RENDER
+function renderTable() {
+  let html = "";
+
+  books.forEach((b, i) => {
+    html += `
+    <tr>
+      <td>${b.jp}</td>
+      <td>${b.title}</td>
+      <td>${b.status}</td>
+      <td>
+        <button onclick="editBook(${i})">Edit</button>
+        <button onclick="copyBook(${i})">Copy</button>
+        <button onclick="deleteBook(${i})">Delete</button>
+      </td>
+    </tr>`;
+  });
+
+  document.getElementById("bookTable").innerHTML = html;
 }
 
-// Copy All
-function copyAll() {
-  const all = `
-Title: ${title.value}
-Author: ${author.value}
-Description: ${description.value}
-Keywords: ${keywords.value}
-`;
-  copyText(all);
-}
-
-// Open Links
-function openLink(url) {
-  window.open(url, "_blank");
-}
-document.getElementById("fileInputText").addEventListener("change", function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = function(event) {
-    const text = event.target.result;
-
-    // 👇 दोनों जगह डालें
-    document.getElementById("importText").value = text;
-    document.getElementById("editor").value = text;
-  };
-
-  reader.readAsText(file);
-});
-</script>
+// EDIT
 function editBook(i) {
   const b = books[i];
 
@@ -180,8 +130,81 @@ function editBook(i) {
   title.value = b.title;
   author.value = b.author;
   status.value = b.status;
-
-  editor.value = b.content || "";
+  description.value = b.description;
+  keywords.value = b.keywords;
+  editor.value = b.content;
 }
+
+// DELETE
+function deleteBook(i) {
+  books.splice(i, 1);
+  localStorage.setItem("books", JSON.stringify(books));
+  renderTable();
+}
+
+// COPY SINGLE
+function copyBook(i) {
+  const b = books[i];
+  navigator.clipboard.writeText(
+`JP: ${b.jp}
+Title: ${b.title}
+Description: ${b.description}
+Keywords: ${b.keywords}`
+  );
+  alert("Copied!");
+}
+
+// COPY ALL
+function copyAll() {
+  navigator.clipboard.writeText(editor.value);
+  alert("Copied!");
+}
+
+// FORMAT
+function formatText() {
+  let text = editor.value;
+  text = text.replace(/\s+/g, " ");
+  text = text.replace(/\.\s/g, ".\n\n");
+  editor.value = text;
+}
+
+// AI GENERATE
+function runAI() {
+
+  let desc = description.value;
+
+  if (!desc) {
+    alert("पहले description डालें");
+    return;
+  }
+
+  let titleAI = desc.split(" ").slice(0, 6).join(" ");
+  let keywordsAI = [...new Set(desc.split(" "))].slice(0, 10).join(", ");
+
+  let content = `
+📘 ${titleAI}
+
+📖 विवरण:
+${desc.substring(0,120)}
+
+🔑 Keywords:
+${keywordsAI}
+
+📝 सामग्री:
+${desc}
+
+👉 यह पुस्तक उपयोगी ज्ञान प्रदान करती है।
+`;
+
+  title.value = titleAI;
+  keywords.value = keywordsAI;
+  editor.value = content;
+}
+
+// INIT
+renderTable();
+
+</script>
+
 </body>
-  </html>
+</html>
