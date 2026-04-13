@@ -156,7 +156,22 @@ Keywords: ${keywords.value}
 function openLink(url) {
   window.open(url, "_blank");
 }
+document.getElementById("fileInputText").addEventListener("change", function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
 
+  const reader = new FileReader();
+
+  reader.onload = function(event) {
+    const text = event.target.result;
+
+    // 👇 दोनों जगह डालें
+    document.getElementById("importText").value = text;
+    document.getElementById("editor").value = text;
+  };
+
+  reader.readAsText(file);
+});
 </script>
 
 </body>
