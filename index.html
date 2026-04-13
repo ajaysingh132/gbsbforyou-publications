@@ -173,6 +173,15 @@ document.getElementById("fileInputText").addEventListener("change", function(e) 
   reader.readAsText(file);
 });
 </script>
+function editBook(i) {
+  const b = books[i];
 
+  jp.value = b.jp;
+  title.value = b.title;
+  author.value = b.author;
+  status.value = b.status;
+
+  editor.value = b.content || "";
+}
 </body>
   </html>
