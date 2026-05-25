@@ -13,8 +13,60 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:Arial,sans-serif;
+/* ===== PRINT / PDF MODE ===== */
+
+@media print {
+
+body{
+background:white !important;
+padding:0;
+margin:0;
 }
 
+.header,
+button,
+input,
+select,
+#searchInput,
+#coverInput,
+.small-btn,
+.card h3,
+table,
+.grid,
+.preview{
+display:none !important;
+}
+
+.card{
+box-shadow:none !important;
+border:none !important;
+padding:0 !important;
+margin:0 !important;
+background:white !important;
+}
+
+#editor{
+display:block !important;
+width:100% !important;
+height:auto !important;
+border:none !important;
+font-size:18px !important;
+line-height:1.8 !important;
+padding:20px !important;
+white-space:pre-wrap !important;
+}
+
+textarea{
+overflow:visible !important;
+}
+
+@page{
+size:A4;
+margin:20mm;
+}
+
+}
+}
 body{
 background:#f5f1e6;
 padding:10px;
