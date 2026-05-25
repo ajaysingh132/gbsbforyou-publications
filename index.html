@@ -1,124 +1,131 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GBS Publications - AI Writer</title>
+<title>GBS Publications - AI Writer & KDP Tool</title>
 
 <style>
 
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:Arial,sans-serif;
-background:#f6eedc;
+}
+
+body{
+background:#f5f1e6;
+padding:10px;
 }
 
 .header{
-background:linear-gradient(#ff8c00,#d35400);
+background:linear-gradient(180deg,#ff8c00,#e65c00);
 color:white;
-text-align:center;
 padding:18px;
+text-align:center;
 font-size:24px;
 font-weight:bold;
-box-shadow:0 2px 8px rgba(0,0,0,0.2);
-}
-
-.container{
-padding:10px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+margin-bottom:12px;
 }
 
 .card{
 background:white;
-padding:12px;
-margin-bottom:12px;
+padding:15px;
 border-radius:12px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
+margin-bottom:14px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
 h3{
-margin-top:0;
+margin-bottom:10px;
 color:#d35400;
 }
 
-input,textarea,select{
+input,
+textarea,
+select{
 width:100%;
-padding:10px;
-margin:6px 0;
-border-radius:8px;
+padding:12px;
+margin-top:8px;
+margin-bottom:10px;
 border:1px solid #ccc;
-box-sizing:border-box;
+border-radius:8px;
 font-size:15px;
 }
 
 textarea{
-min-height:180px;
+min-height:140px;
+resize:vertical;
 }
 
 button{
 width:100%;
-padding:12px;
-margin:5px 0;
+padding:14px;
+margin-top:8px;
 border:none;
 border-radius:8px;
 background:#ff8c00;
 color:white;
+font-size:16px;
 font-weight:bold;
-font-size:15px;
+cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
-opacity:0.9;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-}
-
-th,td{
-border:1px solid #ddd;
-padding:8px;
-text-align:center;
-}
-
-th{
-background:#d35400;
-color:white;
-}
-
-.cover-preview{
-width:100%;
-max-height:260px;
-object-fit:cover;
-border-radius:10px;
-margin-top:10px;
-border:1px solid #ccc;
-}
-
-.badge{
-padding:5px 8px;
-border-radius:6px;
-color:white;
-font-size:12px;
-}
-
-.draft{
-background:#e67e22;
-}
-
-.ready{
-background:#27ae60;
-}
-
-.published{
-background:#c0392b;
+background:#e67300;
 }
 
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:6px;
+gap:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+background:white;
+}
+
+th{
+background:#e65c00;
+color:white;
+padding:10px;
+font-size:14px;
+}
+
+td{
+padding:10px;
+border:1px solid #ddd;
+font-size:13px;
+text-align:center;
+}
+
+.cover-img{
+width:60px;
+height:90px;
+object-fit:cover;
+border-radius:4px;
+}
+
+.small-btn{
+padding:8px;
+font-size:12px;
+margin:2px;
+}
+
+.preview{
+width:100%;
+margin-top:10px;
+border-radius:10px;
+max-height:250px;
+object-fit:cover;
 }
 
 @media(max-width:700px){
@@ -127,22 +134,16 @@ gap:6px;
 grid-template-columns:1fr;
 }
 
-table{
-font-size:12px;
-}
-
 }
 
 </style>
 </head>
-
 <body>
 
 <div class="header">
 📚 GBS Publications - AI Writer & KDP Tool
 </div>
 
-<div class="container">
 <div class="card">
 
 <h3>🧠 AI Publishing Tools</h3>
@@ -168,14 +169,16 @@ font-size:12px;
 </button>
 
 </div>
+
 <div class="card">
 
 <h3>🔍 Search Books</h3>
 
-<input 
-id="searchInput" 
+<input
+type="text"
+id="searchInput"
 placeholder="Search by title"
-onkeyup="searchBooks()"
+onkeyup="renderBooks()"
 >
 
 </div>
@@ -184,13 +187,15 @@ onkeyup="searchBooks()"
 
 <h3>📘 Book Form</h3>
 
-<input 
-id="title" 
+<input
+type="text"
+id="title"
 placeholder="Book Title"
 >
 
-<input 
-id="author" 
+<input
+type="text"
+id="author"
 placeholder="Author Name"
 >
 
@@ -201,11 +206,11 @@ placeholder="Author Name"
 </select>
 
 <select id="category">
-<option>Research</option>
 <option>Spiritual</option>
+<option>Research</option>
 <option>Education</option>
+<option>History</option>
 <option>AI</option>
-<option>GBSB4U</option>
 </select>
 
 <textarea
@@ -214,6 +219,7 @@ placeholder="Book Description"
 ></textarea>
 
 <input
+type="text"
 id="keywords"
 placeholder="Keywords"
 >
@@ -224,11 +230,12 @@ placeholder="Keywords"
 type="file"
 id="coverInput"
 accept="image/*"
+onchange="previewCover(event)"
 >
 
 <img
 id="coverPreview"
-class="cover-preview"
+class="preview"
 style="display:none;"
 >
 
@@ -241,7 +248,7 @@ placeholder="Write or paste manuscript here"
 
 <div class="grid">
 
-<button onclick="runAI()">
+<button onclick="aiGenerate()">
 🤖 AI Generate
 </button>
 
@@ -254,10 +261,28 @@ placeholder="Write or paste manuscript here"
 </button>
 
 <button onclick="copyKDP()">
-📤 Copy KDP
+📋 Copy KDP
 </button>
 
 </div>
+
+</div>
+
+<div class="card">
+
+<h3>📤 Export Tools</h3>
+
+<button onclick="downloadTXT()">
+📄 Download TXT
+</button>
+
+<button onclick="downloadHTML()">
+🌐 Download HTML
+</button>
+
+<button onclick="printBook()">
+🖨 Print / PDF
+</button>
 
 </div>
 
@@ -270,22 +295,20 @@ placeholder="Write or paste manuscript here"
 <thead>
 
 <tr>
-
 <th>Cover</th>
 <th>Title</th>
 <th>Status</th>
 <th>Category</th>
 <th>Action</th>
-
 </tr>
 
 </thead>
 
-<tbody id="bookTable"></tbody>
+<tbody id="bookTable">
+
+</tbody>
 
 </table>
-
-</div>
 
 </div>
 
@@ -295,100 +318,47 @@ let books =
 JSON.parse(localStorage.getItem("books"))
 || [];
 
-let editIndex = -1;
+let currentCover = "";
 
-// SAVE LOCAL
-function saveLocal(){
+function previewCover(event){
 
-localStorage.setItem(
-"books",
-JSON.stringify(books)
-);
-
-}
-
-// COVER PREVIEW
-coverInput.addEventListener(
-"change",
-function(e){
-
-const file = e.target.files[0];
+const file = event.target.files[0];
 
 if(!file) return;
 
 const reader = new FileReader();
 
-reader.onload = function(event){
+reader.onload = function(e){
 
-coverPreview.src =
-event.target.result;
+currentCover = e.target.result;
 
-coverPreview.style.display =
-"block";
+const img =
+document.getElementById("coverPreview");
+
+img.src = currentCover;
+
+img.style.display = "block";
 
 }
 
 reader.readAsDataURL(file);
 
 }
-);
 
-// SMART AI
-function runAI(){
+function aiGenerate(){
 
-let desc =
-description.value.trim();
+const desc =
+document.getElementById("description").value;
 
-if(!desc){
+const title =
+document.getElementById("title").value;
 
-alert("पहले description डालें");
+const editor =
+document.getElementById("editor");
 
-return;
-
-}
-
-let words =
-desc.split(" ");
-
-let aiTitle =
-words.slice(0,8).join(" ");
-
-let kw =
-[...new Set(words)]
-
-.filter(w => w.length > 3)
-
-.slice(0,12)
-
-.join(", ");
-
-let chapters = `
-
-1. प्रस्तावना
-2. विषय परिचय
-3. मुख्य विश्लेषण
-4. उदाहरण
-5. निष्कर्ष
-
-`;
-
-let manuscript = `
-
-📘 ${aiTitle}
-
-✍️ लेखक:
-${author.value}
-
-📖 पुस्तक विवरण:
-${desc}
-
-🔑 Keywords:
-${kw}
-
-📚 अध्याय संरचना:
-${chapters}
-
-📝 AI Draft Manuscript:
+editor.value =
+`
+📖 ${title}
 
 ${desc}
 
@@ -396,92 +366,88 @@ ${desc}
 
 इसमें व्यावहारिक, दार्शनिक और विश्लेषणात्मक दृष्टिकोण शामिल हैं।
 
-© Jagannath Publishing
+अध्याय 1 : परिचय
 
+अध्याय 2 : मूल सिद्धांत
+
+अध्याय 3 : गहन विश्लेषण
+
+अध्याय 4 : आधुनिक संदर्भ
+
+अध्याय 5 : निष्कर्ष
 `;
 
-title.value = aiTitle;
-
-keywords.value = kw;
-
-editor.value = manuscript;
-
 }
 
-// FORMATTER
 function formatText(){
 
-let text = editor.value;
+let text =
+document.getElementById("editor").value;
 
 text =
-text.replace(/\s+/g," ");
+text.replace(/\n{3,}/g,"\n\n");
 
-text =
-text.replace(/\. /g,".\n\n");
-
-editor.value = text;
+document.getElementById("editor").value =
+text;
 
 }
 
-// SAVE BOOK
 function saveBook(){
 
 const book = {
 
-title:title.value,
+title:
+document.getElementById("title").value,
 
-author:author.value,
+author:
+document.getElementById("author").value,
 
-status:status.value,
+status:
+document.getElementById("status").value,
 
-category:category.value,
+category:
+document.getElementById("category").value,
 
-description:description.value,
+description:
+document.getElementById("description").value,
 
-keywords:keywords.value,
+keywords:
+document.getElementById("keywords").value,
 
-content:editor.value,
+content:
+document.getElementById("editor").value,
 
-cover:coverPreview.src || ""
+cover:
+currentCover
 
 };
 
-if(editIndex === -1){
-
 books.push(book);
 
-}else{
-
-books[editIndex] = book;
-
-editIndex = -1;
-
-}
-
-saveLocal();
+localStorage.setItem(
+"books",
+JSON.stringify(books)
+);
 
 renderBooks();
 
-clearForm();
-
-alert("Book Saved!");
+alert("Book Saved Successfully");
 
 }
 
-// RENDER
-function renderBooks(list = books){
+function renderBooks(){
+
+const search =
+document.getElementById("searchInput")
+.value.toLowerCase();
 
 let html = "";
 
-list.forEach((b,i)=>{
+books.forEach((b,i)=>{
 
-let badgeClass = "draft";
-
-if(b.status === "Ready")
-badgeClass = "ready";
-
-if(b.status === "Published")
-badgeClass = "published";
+if(
+!b.title.toLowerCase().includes(search)
+) return;
 
 html += `
 
@@ -490,34 +456,37 @@ html += `
 <td>
 
 ${b.cover
-? `<img src="${b.cover}" width="60">`
-: "📕"}
+?
+`<img src="${b.cover}" class="cover-img">`
+:
+"📕"
+}
 
 </td>
 
 <td>${b.title}</td>
 
-<td>
-
-<span class="badge ${badgeClass}">
-${b.status}
-</span>
-
-</td>
+<td>${b.status}</td>
 
 <td>${b.category}</td>
 
 <td>
 
-<button onclick="editBook(${i})">
+<button
+class="small-btn"
+onclick="editBook(${i})">
 Edit
 </button>
 
-<button onclick="deleteBook(${i})">
+<button
+class="small-btn"
+onclick="deleteBook(${i})">
 Delete
 </button>
 
-<button onclick="copySingle(${i})">
+<button
+class="small-btn"
+onclick="copyBook(${i})">
 Copy
 </button>
 
@@ -529,52 +498,61 @@ Copy
 
 });
 
-document.getElementById(
-"bookTable"
-).innerHTML = html;
+document.getElementById("bookTable")
+.innerHTML = html;
 
 }
 
-// EDIT
 function editBook(i){
 
-let b = books[i];
+const b = books[i];
 
-title.value = b.title;
+document.getElementById("title").value =
+b.title;
 
-author.value = b.author;
+document.getElementById("author").value =
+b.author;
 
-status.value = b.status;
+document.getElementById("status").value =
+b.status;
 
-category.value = b.category;
+document.getElementById("category").value =
+b.category;
 
-description.value = b.description;
+document.getElementById("description").value =
+b.description;
 
-keywords.value = b.keywords;
+document.getElementById("keywords").value =
+b.keywords;
 
-editor.value = b.content;
+document.getElementById("editor").value =
+b.content;
 
 if(b.cover){
 
-coverPreview.src = b.cover;
+currentCover = b.cover;
 
-coverPreview.style.display =
-"block";
+const img =
+document.getElementById("coverPreview");
+
+img.src = b.cover;
+
+img.style.display = "block";
 
 }
 
-editIndex = i;
-
 }
 
-// DELETE
 function deleteBook(i){
 
 if(confirm("Delete this book?")){
 
 books.splice(i,1);
 
-saveLocal();
+localStorage.setItem(
+"books",
+JSON.stringify(books)
+);
 
 renderBooks();
 
@@ -582,84 +560,191 @@ renderBooks();
 
 }
 
-// COPY SINGLE
-function copySingle(i){
+function copyBook(i){
+
+const b = books[i];
 
 navigator.clipboard.writeText(
-books[i].content
+`
+TITLE:
+${b.title}
+
+AUTHOR:
+${b.author}
+
+DESCRIPTION:
+${b.description}
+
+KEYWORDS:
+${b.keywords}
+
+CONTENT:
+${b.content}
+`
 );
 
-alert("Copied!");
+alert("Copied");
 
 }
 
-// COPY KDP
 function copyKDP(){
 
-let txt = `
+const data =
+`
+TITLE:
+${document.getElementById("title").value}
 
-Title:
-${title.value}
+AUTHOR:
+${document.getElementById("author").value}
 
-Author:
-${author.value}
+DESCRIPTION:
+${document.getElementById("description").value}
 
-Description:
-${description.value}
+KEYWORDS:
+${document.getElementById("keywords").value}
 
-Keywords:
-${keywords.value}
+CONTENT:
+${document.getElementById("editor").value}
+`;
 
-Content:
-${editor.value}
+navigator.clipboard.writeText(data);
+
+alert("KDP Data Copied");
+
+}
+
+function generateMetadata(){
+
+const title =
+document.getElementById("title").value;
+
+document.getElementById("keywords").value =
+title
+.split(" ")
+.join(",");
+
+alert("Metadata Generated");
+
+}
+
+function generateTOC(){
+
+const editor =
+document.getElementById("editor");
+
+editor.value +=
+
+`
+
+📚 TABLE OF CONTENTS
+
+1. Introduction
+2. Main Concepts
+3. Deep Analysis
+4. Modern Context
+5. Conclusion
 
 `;
 
-navigator.clipboard.writeText(txt);
+}
 
-alert("KDP Ready Data Copied!");
+function generateBackCover(){
+
+const desc =
+document.getElementById("description");
+
+desc.value +=
+
+`
+
+यह पुस्तक पाठकों को विषय की गहराई तक ले जाती है और आधुनिक दृष्टिकोण प्रदान करती है।
+
+`;
 
 }
 
-// SEARCH
-function searchBooks(){
+function generateAuthorBio(){
 
-let q =
-searchInput.value.toLowerCase();
+const author =
+document.getElementById("author").value;
 
-let filtered =
-books.filter(b =>
+document.getElementById("editor").value +=
 
-b.title.toLowerCase()
-.includes(q)
+`
 
+👤 AUTHOR BIO
+
+${author} एक शोधकर्ता, लेखक और विचारक हैं।
+
+`;
+
+}
+
+function generateKDPData(){
+
+alert("KDP Ready Data Generated");
+
+copyKDP();
+
+}
+
+function downloadTXT(){
+
+const content =
+document.getElementById("editor").value;
+
+const blob = new Blob(
+[content],
+{type:"text/plain"}
 );
 
-renderBooks(filtered);
+const a =
+document.createElement("a");
+
+a.href =
+URL.createObjectURL(blob);
+
+a.download = "book.txt";
+
+a.click();
 
 }
 
-// CLEAR FORM
-function clearForm(){
+function downloadHTML(){
 
-title.value = "";
+const content = `
+<html>
+<body>
+<pre>
+${document.getElementById("editor").value}
+</pre>
+</body>
+</html>
+`;
 
-author.value = "";
+const blob = new Blob(
+[content],
+{type:"text/html"}
+);
 
-description.value = "";
+const a =
+document.createElement("a");
 
-keywords.value = "";
+a.href =
+URL.createObjectURL(blob);
 
-editor.value = "";
+a.download = "book.html";
 
-coverPreview.src = "";
-
-coverPreview.style.display =
-"none";
+a.click();
 
 }
 
-// INIT
+function printBook(){
+
+window.print();
+
+}
+
 renderBooks();
 
 </script>
