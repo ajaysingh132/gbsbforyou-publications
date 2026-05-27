@@ -180,6 +180,44 @@ max-height:250px;
 object-fit:cover;
 }
 
+.api-section{
+background:#fff3e0;
+padding:12px;
+border-radius:8px;
+margin-bottom:15px;
+border-left:4px solid #ff8c00;
+}
+
+.api-section p{
+color:#d35400;
+font-size:13px;
+margin-bottom:8px;
+font-weight:bold;
+}
+
+#apiKeyInput{
+background:#fff;
+border:2px solid #ff8c00;
+}
+
+.api-status{
+font-size:12px;
+padding:8px;
+border-radius:5px;
+margin-top:8px;
+text-align:center;
+}
+
+.api-status.valid{
+background:#c8e6c9;
+color:#2e7d32;
+}
+
+.api-status.invalid{
+background:#ffcdd2;
+color:#c62828;
+}
+
 @media(max-width:700px){
 
 .grid{
@@ -197,6 +235,17 @@ grid-template-columns:1fr;
 </div>
 
 <div class="card">
+
+<div class="api-section">
+<p>🔐 OpenAI API Key Setting</p>
+<input
+type="password"
+id="apiKeyInput"
+placeholder="Enter your OpenAI API Key (sk-...)"
+onchange="validateApiKey()"
+>
+<div id="apiStatus" class="api-status invalid">❌ API Key not set</div>
+</div>
 
 <h3>🧠 AI Publishing Tools</h3>
 
@@ -371,6 +420,39 @@ JSON.parse(localStorage.getItem("books"))
 || [];
 
 let currentCover = "";
+
+function validateApiKey(){
+const apiKey = document.getElementById("apiKeyInput").value;
+const statusDiv = document.getElementById("apiStatus");
+
+if(!apiKey){
+statusDiv.className = "api-status invalid";
+statusDiv.textContent = "❌ API Key not set";
+localStorage.removeItem("openaiApiKey");
+return false;
+}
+
+if(!apiKey.startsWith("sk-")){
+statusDiv.className = "api-status invalid";
+statusDiv.textContent = "❌ Invalid API Key format (must start with sk-)";
+localStorage.removeItem("openaiApiKey");
+return false;
+}
+
+statusDiv.className = "api-status valid";
+statusDiv.textContent = "✅ API Key is set and ready";
+localStorage.setItem("openaiApiKey", apiKey);
+return true;
+}
+
+// Load API key from localStorage on page load
+window.addEventListener("DOMContentLoaded", function(){
+const savedApiKey = localStorage.getItem("openaiApiKey");
+if(savedApiKey){
+document.getElementById("apiKeyInput").value = savedApiKey;
+validateApiKey();
+}
+});
 
 function previewCover(event){
 
@@ -709,7 +791,7 @@ desc.value +=
 
 `
 
-यह पुस्तक पाठकों को विषय की गहराई तक ले जाती है और आधुनिक दृष्टिकोण प्रदान करती है।
+यह पुस्तक पाठकों को विषय की गहराई तक ले जाती है और आधुनिक दृष्टिकोण प्रदान [...]
 
 `;
 
