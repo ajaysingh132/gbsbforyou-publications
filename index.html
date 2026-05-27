@@ -218,10 +218,115 @@ background:#ffcdd2;
 color:#c62828;
 }
 
+.tabs{
+display:flex;
+gap:8px;
+margin-bottom:12px;
+border-bottom:2px solid #ddd;
+flex-wrap:wrap;
+}
+
+.tab-btn{
+width:auto;
+padding:10px 15px;
+background:#f0f0f0;
+border:none;
+border-radius:5px 5px 0 0;
+cursor:pointer;
+font-weight:bold;
+color:#d35400;
+margin:0;
+transition:0.3s;
+font-size:13px;
+}
+
+.tab-btn.active{
+background:#ff8c00;
+color:white;
+}
+
+.tab-content{
+display:none;
+}
+
+.tab-content.active{
+display:block;
+}
+
+.free-api-list{
+background:#f9f9f9;
+padding:12px;
+border-radius:8px;
+max-height:400px;
+overflow-y:auto;
+margin-bottom:12px;
+}
+
+.api-item{
+padding:10px;
+margin:8px 0;
+background:white;
+border-left:4px solid #ff8c00;
+border-radius:4px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.api-item:hover{
+background:#fff3e0;
+box-shadow:0 2px 4px rgba(0,0,0,0.1);
+}
+
+.api-item-name{
+font-weight:bold;
+color:#d35400;
+font-size:14px;
+}
+
+.api-item-desc{
+font-size:11px;
+color:#666;
+margin-top:4px;
+}
+
+.api-item-url{
+font-size:10px;
+color:#0066cc;
+margin-top:4px;
+word-break:break-all;
+background:#f0f0f0;
+padding:4px;
+border-radius:3px;
+font-family:monospace;
+}
+
+.copy-api-btn{
+padding:5px 10px;
+background:#0066cc;
+color:white;
+border:none;
+border-radius:3px;
+cursor:pointer;
+font-size:11px;
+margin-top:6px;
+}
+
+.copy-api-btn:hover{
+background:#0052a3;
+}
+
 @media(max-width:700px){
 
 .grid{
 grid-template-columns:1fr;
+}
+
+.tabs{
+flex-direction:column;
+}
+
+.free-api-list{
+max-height:300px;
 }
 
 }
@@ -236,8 +341,17 @@ grid-template-columns:1fr;
 
 <div class="card">
 
+<h3>🔐 API Configuration</h3>
+
+<div class="tabs">
+<button class="tab-btn active" onclick="switchTab('paid', event)">💳 Paid API</button>
+<button class="tab-btn" onclick="switchTab('free', event)">🆓 Free APIs</button>
+</div>
+
+<!-- PAID API TAB -->
+<div id="paid" class="tab-content active">
 <div class="api-section">
-<p>🔐 OpenAI API Key Setting</p>
+<p>OpenAI API Key</p>
 <input
 type="password"
 id="apiKeyInput"
@@ -245,6 +359,122 @@ placeholder="Enter your OpenAI API Key (sk-...)"
 onchange="validateApiKey()"
 >
 <div id="apiStatus" class="api-status invalid">❌ API Key not set</div>
+<p style="font-size:11px; color:#999; margin-top:8px;">
+✓ Get key from <a href="https://platform.openai.com/api-keys" target="_blank" style="color:#0066cc;">platform.openai.com</a>
+</p>
+</div>
+</div>
+
+<!-- FREE API TAB -->
+<div id="free" class="tab-content">
+<p style="font-size:12px; color:#666; margin-bottom:10px;">🆓 <strong>12+ Free AI Services - No cost, No credit card needed</strong></p>
+
+<div class="free-api-list">
+
+<!-- 1. Hugging Face -->
+<div class="api-item">
+<div class="api-item-name">🤗 Hugging Face API</div>
+<div class="api-item-desc">NLP, Translation, Text Generation, Summarization</div>
+<div class="api-item-url">https://api-inference.huggingface.co/models/</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://api-inference.huggingface.co/models/')">📋 Copy</button>
+</div>
+
+<!-- 2. Cohere -->
+<div class="api-item">
+<div class="api-item-name">🔗 Cohere API</div>
+<div class="api-item-desc">Free tier: Text generation & classification</div>
+<div class="api-item-url">https://api.cohere.com/</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://api.cohere.com/')">📋 Copy</button>
+</div>
+
+<!-- 3. Google PaLM -->
+<div class="api-item">
+<div class="api-item-name">🔵 Google Generative AI</div>
+<div class="api-item-desc">Google's AI models - Text & Multimodal</div>
+<div class="api-item-url">https://makersuite.google.com/app/apikey</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://makersuite.google.com/app/apikey')">📋 Copy</button>
+</div>
+
+<!-- 4. Anthropic Claude -->
+<div class="api-item">
+<div class="api-item-name">🛡️ Anthropic Claude</div>
+<div class="api-item-desc">Limited free tier for Claude AI model</div>
+<div class="api-item-url">https://console.anthropic.com/</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://console.anthropic.com/')">📋 Copy</button>
+</div>
+
+<!-- 5. Ollama -->
+<div class="api-item">
+<div class="api-item-name">🖥️ Ollama (Local AI)</div>
+<div class="api-item-desc">100% Free - Run Llama 2, Mistral locally</div>
+<div class="api-item-url">http://localhost:11434/api/generate</div>
+<button class="copy-api-btn" onclick="copyToClipboard('http://localhost:11434/api/generate')">📋 Copy</button>
+</div>
+
+<!-- 6. OpenRouter -->
+<div class="api-item">
+<div class="api-item-name">🌐 OpenRouter</div>
+<div class="api-item-desc">Multiple models with free trial credits</div>
+<div class="api-item-url">https://openrouter.ai/</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://openrouter.ai/')">📋 Copy</button>
+</div>
+
+<!-- 7. Replicate -->
+<div class="api-item">
+<div class="api-item-name">🎬 Replicate</div>
+<div class="api-item-desc">Image generation, Text models with free tier</div>
+<div class="api-item-url">https://replicate.com/api</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://replicate.com/api')">📋 Copy</button>
+</div>
+
+<!-- 8. Together AI -->
+<div class="api-item">
+<div class="api-item-name">⚡ Together AI</div>
+<div class="api-item-desc">Open-source LLMs with free credits</div>
+<div class="api-item-url">https://www.together.ai/</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://www.together.ai/')">📋 Copy</button>
+</div>
+
+<!-- 9. Groq -->
+<div class="api-item">
+<div class="api-item-name">🚀 Groq API</div>
+<div class="api-item-desc">Ultra-fast LLM inference - Free tier</div>
+<div class="api-item-url">https://console.groq.com/</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://console.groq.com/')">📋 Copy</button>
+</div>
+
+<!-- 10. Mistral -->
+<div class="api-item">
+<div class="api-item-name">🌙 Mistral AI</div>
+<div class="api-item-desc">Open-source alternative to ChatGPT</div>
+<div class="api-item-url">https://console.mistral.ai/</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://console.mistral.ai/')">📋 Copy</button>
+</div>
+
+<!-- 11. Perplexity -->
+<div class="api-item">
+<div class="api-item-name">🔍 Perplexity AI</div>
+<div class="api-item-desc">AI search with real-time info & citation</div>
+<div class="api-item-url">https://www.perplexity.ai/api</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://www.perplexity.ai/api')">📋 Copy</button>
+</div>
+
+<!-- 12. Poe -->
+<div class="api-item">
+<div class="api-item-name">💬 Poe.com API</div>
+<div class="api-item-desc">Access Claude, GPT & others with free option</div>
+<div class="api-item-url">https://poe.com/</div>
+<button class="copy-api-btn" onclick="copyToClipboard('https://poe.com/')">📋 Copy</button>
+</div>
+
+</div>
+
+<p style="font-size:11px; color:#999; background:#f0f0f0; padding:8px; border-radius:4px;">
+💡 Tip: सभी free APIs को signup के बाद use कर सकते हैं। अपनी आवश्यकता के अनुसार चुनें।
+</p>
+
+</div>
+
 </div>
 
 <h3>🧠 AI Publishing Tools</h3>
@@ -420,6 +650,25 @@ JSON.parse(localStorage.getItem("books"))
 || [];
 
 let currentCover = "";
+
+// Tab Switching Function
+function switchTab(tabName, event){
+  if(event) event.preventDefault();
+  const tabs = document.querySelectorAll('.tab-content');
+  const buttons = document.querySelectorAll('.tab-btn');
+  
+  tabs.forEach(tab => tab.classList.remove('active'));
+  buttons.forEach(btn => btn.classList.remove('active'));
+  
+  document.getElementById(tabName).classList.add('active');
+  if(event) event.target.classList.add('active');
+}
+
+// Copy to Clipboard Function
+function copyToClipboard(text){
+  navigator.clipboard.writeText(text);
+  alert('✅ URL copied to clipboard!');
+}
 
 function validateApiKey(){
 const apiKey = document.getElementById("apiKeyInput").value;
