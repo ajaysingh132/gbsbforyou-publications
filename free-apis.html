@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free AI APIs Library</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f1e6;
+padding:10px;
+}
+
+.header{
+background:linear-gradient(180deg,#ff8c00,#e65c00);
+color:white;
+padding:18px;
+text-align:center;
+font-size:24px;
+font-weight:bold;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+margin-bottom:12px;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:12px;
+margin-bottom:14px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+h3{
+margin-bottom:10px;
+color:#d35400;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;
+}
+
+button{
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#ff8c00;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+margin-bottom:8px;
+}
+
+button:hover{
+background:#e67300;
+}
+
+.api-list{
+background:#f9f9f9;
+padding:12px;
+border-radius:8px;
+max-height:600px;
+overflow-y:auto;
+margin-bottom:12px;
+}
+
+.api-item{
+padding:12px;
+margin:10px 0;
+background:white;
+border-left:4px solid #ff8c00;
+border-radius:4px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.api-item:hover{
+background:#fff3e0;
+box-shadow:0 2px 4px rgba(0,0,0,0.1);
+}
+
+.api-item-name{
+font-weight:bold;
+color:#d35400;
+font-size:16px;
+}
+
+.api-item-desc{
+font-size:13px;
+color:#666;
+margin-top:5px;
+}
+
+.api-item-url{
+font-size:11px;
+color:#0066cc;
+margin-top:5px;
+word-break:break-all;
+background:#f0f0f0;
+padding:5px;
+border-radius:3px;
+font-family:monospace;
+}
+
+.api-item-features{
+font-size:12px;
+color:#666;
+margin-top:5px;
+}
+
+.copy-btn{
+padding:6px 12px;
+background:#0066cc;
+color:white;
+border:none;
+border-radius:4px;
+cursor:pointer;
+font-size:12px;
+margin-top:8px;
+width:auto;
+}
+
+.copy-btn:hover{
+background:#0052a3;
+}
+
+.category-tag{
+display:inline-block;
+background:#ff8c00;
+color:white;
+padding:3px 8px;
+border-radius:12px;
+font-size:11px;
+margin-right:5px;
+margin-top:5px;
+}
+
+@media(max-width:700px){
+.api-list{
+max-height:400px;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+🆓 Free AI APIs Library
+</div>
+
+<div class="card">
+
+<h3>🔍 Search APIs</h3>
+<input
+type="text"
+id="searchInput"
+placeholder="Search by name, feature, or category..."
+onkeyup="filterAPIs()"
+>
+<button onclick="showAllAPIs()">📋 Show All APIs</button>
+
+</div>
+
+<div id="apiListContainer" class="api-list">
+</div>
+
+<script>
+
+// Comprehensive Free API Database
+const apis = [
+
+{
+name: "Hugging Face API",
+emoji: "🤗",
+description: "Free AI models for NLP, Computer Vision, Audio, etc.",
+url: "https://api-inference.huggingface.co/",
+categories: ["Text Generation", "Translation", "Summarization", "NLP"],
+features: ["Free tier available", "500+ models", "Open source"],
+limits: "Limited free requests per month"
+},
+
+{
+name: "Cohere API",
+emoji: "🔗",
+description: "Text generation, summarization, and classification",
+url: "https://api.cohere.com/",
+categories: ["Text Generation", "Classification"],
+features: ["Free tier", "Easy integration", "Good documentation"],
+limits: "Limited API calls on free plan"
+},
+
+{
+name: "Google Generative AI (PaLM)",
+emoji: "🔵",
+description: "Access to Google's latest AI models",
+url: "https://makersuite.google.com/app/apikey",
+categories: ["Text Generation", "Chat", "Embeddings"],
+features: ["Free API key", "Powerful models", "Official Google support"],
+limits: "Rate limited on free tier"
+},
+
+{
+name: "Anthropic Claude API",
+emoji: "🛡️",
+description: "High-quality AI assistant with strong safety features",
+url: "https://console.anthropic.com/",
+categories: ["Chat", "Text Generation", "Analysis"],
+features: ["Limited free tier", "Very capable", "Safe by default"],
+limits: "Very limited free usage"
+},
+
+{
+name: "Ollama (Local AI)",
+emoji: "🖥️",
+description: "Run LLMs locally - Completely FREE! No API keys needed",
+url: "https://ollama.ai/",
+categories: ["Local LLM", "Llama 2", "Mistral", "Neural Chat"],
+features: ["100% Free", "Local execution", "No internet required", "Privacy-first"],
+limits: "Depends on local hardware"
+},
+
+{
+name: "OpenRouter",
+emoji: "🌐",
+description: "Unified API for multiple AI models",
+url: "https://openrouter.ai/",
+categories: ["Multiple Models", "Chat", "Completion"],
+features: ["Free trial credits", "Multiple providers", "Simple pricing"],
+limits: "Credit-based system"
+},
+
+{
+name: "Replicate",
+emoji: "🎬",
+description: "API for running ML models - Image, Text, Audio, Video",
+url: "https://replicate.com/",
+categories: ["Image Generation", "Text", "Video", "Audio"],
+features: ["Generous free tier", "Easy to use", "Many models"],
+limits: "Usage-based pricing after free quota"
+},
+
+{
+name: "Together AI",
+emoji: "⚡",
+description: "High-performance open-source LLMs API",
+url: "https://www.together.ai/",
+categories: ["Open Source LLMs", "Text Generation"],
+features: ["Free credits", "Fast inference", "Community models"],
+limits: "Credit-based system"
+},
+
+{
+name: "Groq API",
+emoji: "🚀",
+description: "Ultra-fast LLM inference",
+url: "https://console.groq.com/",
+categories: ["Fast LLM", "Real-time", "Chat"],
+features: ["Incredibly fast", "Free tier available", "Multiple models"],
+limits: "Rate limited on free tier"
+},
+
+{
+name: "Mistral AI",
+emoji: "🌙",
+description: "Open-source alternative to ChatGPT",
+url: "https://console.mistral.ai/",
+categories: ["Open Source", "Text Generation", "Chat"],
+features: ["Open models", "Free tier", "Good performance"],
+limits: "Limited free API calls"
+},
+
+{
+name: "Perplexity AI",
+emoji: "🔍",
+description: "AI search with real-time web access",
+url: "https://www.perplexity.ai/api",
+categories: ["Search", "Research", "Summary"],
+features: ["Real-time info", "With citations", "Free basic version"],
+limits: "Limited free queries"
+},
+
+{
+name: "Poe.com API",
+emoji: "💬",
+description: "Access multiple AI models via one interface",
+url: "https://poe.com/",
+categories: ["Multiple Models", "Chat", "Research"],
+features: ["Free credits", "Claude, GPT, etc.", "Easy to use"],
+limits: "Credit-based system"
+},
+
+{
+name: "TextSynth",
+emoji: "✍️",
+description: "Text generation API with various open models",
+url: "https://textsynth.com/",
+categories: ["Text Generation", "Completion"],
+features: ["Free tier", "Multiple models", "Simple API"],
+limits: "Usage based"
+},
+
+{
+name: "Hugging Chat",
+emoji: "💭",
+description: "Open-source chat interface (can be self-hosted)",
+url: "https://huggingface.co/chat",
+categories: ["Chat", "Open Source", "Free"],
+features: ["100% Free", "No login required", "Open source"],
+limits: "None for basic usage"
+},
+
+{
+name: "Claude 3 (Free via Claude.ai)",
+emoji: "🎯",
+description: "Use Claude AI for free through web interface",
+url: "https://claude.ai/",
+categories: ["Chat", "Writing", "Analysis"],
+features: ["Daily free limit", "Very capable", "No API needed"],
+limits: "Conversation limit per day"
+},
+
+{
+name: "ChatGPT (Free)",
+emoji: "💚",
+description: "OpenAI's ChatGPT free version",
+url: "https://chat.openai.com/",
+categories: ["Chat", "General Purpose", "Free"],
+features: ["Free tier", "GPT-3.5", "Easy to use"],
+limits: "Limited queries on free plan"
+},
+
+{
+name: "Gemini (Google AI)",
+emoji: "✨",
+description: "Google's latest multimodal AI",
+url: "https://gemini.google.com/",
+categories: ["Chat", "Multimodal", "Free"],
+features: ["Free tier", "Multimodal", "Google account"],
+limits: "Fair usage policy"
+},
+
+{
+name: "LiteLLM",
+emoji: "⚙️",
+description: "Open-source library to call any LLM",
+url: "https://github.com/BerriAI/litellm",
+categories: ["SDK", "Multiple APIs", "Open Source"],
+features: ["100% Free", "Open source", "Multiple providers"],
+limits: "Depends on used providers"
+},
+
+{
+name: "LocalAI",
+emoji: "🏠",
+description: "Self-hosted AI without GPU",
+url: "https://localai.io/",
+categories: ["Self-Hosted", "Open Source", "Local"],
+features: ["100% Free", "Privacy first", "No GPU needed"],
+limits: "Limited by local hardware"
+},
+
+{
+name: "Llama 2 (Meta)",
+emoji: "🦙",
+description: "Open-source large language model",
+url: "https://www.llama.com/",
+categories: ["Open Source", "LLM", "Free"],
+features: ["Fully open source", "Commercial use allowed", "Powerful"],
+limits: "Requires local setup or hosting"
+}
+
+];
+
+function renderAPIs(apisToRender){
+const container = document.getElementById("apiListContainer");
+container.innerHTML = "";
+
+if(apisToRender.length === 0){
+container.innerHTML = "<p style='text-align:center; color:#999;'>कोई API नहीं मिला। अलग कीवर्ड से खोजें।</p>";
+return;
+}
+
+apisToRender.forEach(api => {
+const apiCard = document.createElement("div");
+apiCard.className = "api-item";
+apiCard.innerHTML = `
+<div class="api-item-name">${api.emoji} ${api.name}</div>
+<div class="api-item-desc">${api.description}</div>
+<div class="api-item-url">🔗 ${api.url}</div>
+<div class="api-item-features">
+<strong>Features:</strong> ${api.features.join(", ")}
+</div>
+<div class="api-item-features">
+<strong>Categories:</strong>
+${api.categories.map(c => `<span class="category-tag">${c}</span>`).join("")}
+</div>
+<div class="api-item-features" style="color:#d35400;">
+⚠️ ${api.limits}
+</div>
+<button class="copy-btn" onclick="copyToClipboard('${api.url}')">📋 Copy URL</button>
+`;
+container.appendChild(apiCard);
+});
+}
+
+function filterAPIs(){
+const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+
+if(!searchTerm){
+renderAPIs(apis);
+return;
+}
+
+const filtered = apis.filter(api => 
+api.name.toLowerCase().includes(searchTerm) ||
+api.description.toLowerCase().includes(searchTerm) ||
+api.categories.some(c => c.toLowerCase().includes(searchTerm)) ||
+api.features.some(f => f.toLowerCase().includes(searchTerm))
+);
+
+renderAPIs(filtered);
+}
+
+function showAllAPIs(){
+document.getElementById("searchInput").value = "";
+renderAPIs(apis);
+}
+
+function copyToClipboard(text){
+navigator.clipboard.writeText(text);
+alert("✅ URL क्लिपबोर्ड में कॉपी हो गया!");
+}
+
+// Initial load
+renderAPIs(apis);
+
+</script>
+
+</body>
+</html>
